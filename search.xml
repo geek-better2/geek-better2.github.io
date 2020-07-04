@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/07/03/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><a id="more"></a>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>菜鸟网络一面面经</title>
+    <url>/2020/07/04/%E8%8F%9C%E9%B8%9F%E7%BD%91%E7%BB%9C%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/</url>
+    <content><![CDATA[<h3 id="一、背景介绍"><a href="#一、背景介绍" class="headerlink" title="一、背景介绍"></a>一、背景介绍</h3><p> 工作项目主要是iot型项目，组内技术有用到netty，flink, kafka, redis,mysql,spark。后台技术有Spring boot,dubbo,Es等等web技术，但组内业务非后台，所以面试时介绍了情况，面试官也没有问后台框架相关知识。</p>
+<h3 id="二、面试过程（以下以A表示面试官，B表示我本人）"><a href="#二、面试过程（以下以A表示面试官，B表示我本人）" class="headerlink" title="二、面试过程（以下以A表示面试官，B表示我本人）"></a>二、面试过程（以下以A表示面试官，B表示我本人）</h3><a id="more"></a>
+
+<p> 注：自我介绍过程省略</p>
+<p> A：先简单介绍一下你的项目架构吧</p>
+<p> B: XXXX(描述了下项目业务流程，讲有用到netty,kafka，flink，redis,mysql)</p>
+<p> A：你们项目用到的框架挺多的，能将一下使用这些框架时是如何取舍的吗？为什么用这个框架呢？</p>
+<p> B: 首先netty是因为业内公认的优秀通讯框架是netty，所以选netty是无可厚非的。在消息队列的选型上，有考虑过rocketMq和kafka对比，从官网来说，两个框架都支持高吞吐，高可用。但是我们经过压测发现用rocketMq时会导致netty的长连接数上不去，只能保持2万5左右，而用kafka的话可以保持4万左右的长连接，另外，在阿里云上对于我们的业务需要rocketMq的铂金版，比较昂贵。实时计算方面，选择了flink，而没有使用spark Streaming，是因为spark Streaming是用微批处理来表示实时处理。而flink是基于状态的实时无界/有界处理框架，而且flink最近几年社区很火，另外我们组内有一个技术人员是从数据中心转过来的，对flink更加熟悉，所以架构选型上选择了flink。</p>
+<p> A：你们项目用netty，能够保持几万长连接。那你们有在linux层面有做什么处理吗？服务器的连接数是否是可以无限扩展呢？</p>
+<p> B：linux相关的知识不是很熟悉，但是我们当时对netty服务器做了压测，达到1万以上的时候就报错connect reset by peer 错误，后面了解了下是因为linux的句柄（open files）的原因，于是开大了句柄数，连接数在负载均衡的情况下可以达到单机连接数（4核8G）2万5左右。</p>
+<p> A：你说通过开大句柄数可以增加tcp长连接数，那你知道在linux上句柄数和tcp长连接是怎么对应的吗？为什么增大所谓的句柄数，你连接数就可以上来呢？</p>
+<p> B：额，这在linux层面没有去深究，只是大概知道这么个情况，抱歉。</p>
+<p> A：没事，那你们项目有用到kafka，你们是如何保证消息不被重复消费的呢？</p>
+<p> B：kafka里面有分区，多副本机制，每个消息被发送到broker后，leader接收到后，follower会去同步，我们采用的是-1,就是说副本全部同步成功后才会响应成功，这样不会消息丢失，但是在副本同步后leader挂了导致没有ack后，生产者会重复发送，这种相对比较极端的情况，我们在消费者层做了控制，每个消息有时间戳，如果是同一个时间戳的消息，我们消费会验证。</p>
+<p> A: 好的，那不说kafka的消息重复方面，假如是业务调接口时，由于网络超时等原因导致的重复写请求。你们是如何保持这个一致性的呢？</p>
+<p> B:接口幂等方面的话，我了解过一些，应该可以采用乐观锁机制，给每个请求写入的时候加个版本管理。</p>
+<p> A：那假如用乐观锁来保持幂等，这个版本号你觉得是在哪里维护的呢？</p>
+<p> B：（有点小懵，考虑了一下）应该是在我们的接口处自增的，因为从消息里面带过来的话，会增加消息包的大小，而且不容易维护。（这个很大可能答错了，我不大熟）</p>
+<p> A：ok，那假如我有一个服务，它要调用A服务，A有调用B服务，B又调用C服务。这么说吧，淘宝下一个订单，会有订单系统，账单系统，仓储系统的调用。你如何保持他们的一致性的呢？</p>
+<p> B：（分布式事务？？？）噢，你想问的应该是分布式事务吧，这个我有了解过，可以用2PC来实现分布式事务，XXXX(细节就不敲了，感兴趣可以自己去了解下)。</p>
+<p> A：2PC的分布式事务有什么缺点呢，有没有什么更好的方案？</p>
+<p> B: 2PC的话，在第一阶段的本地会写log日志，并且锁定资源，如果此时有一个服务网络延迟比较严重甚至是挂了的情况，会导致这个分布式事务执行失败，并且由于锁定资源会导致服务的吞吐量降低。所以有个3PC的分布式事务方案，就是在锁定资源前增加了一个询问过程（询问过程不锁定资源），如果各个服务都能正常响应，说明应该不会有网络超时问题。这些都是我自己学习的，业务没有实操过，我对web不是很熟悉，对并发，jvm，redis，kafka，mysql等中间件比较熟悉（已经有点懵了，想转移话题）</p>
+<p> A:那你们项目是用netty做长连接服务的，那你能讲下netty的线程模型吗？</p>
+<p> B：netty中有boss线程组，和worker线程组，采用的是reactor模型实现多路复用（有兴趣自己了解下）boss线程监听连接事件，轮训机制，worker线程监听读写事件，然后分配给业务线程去处理。</p>
+<p> A：你刚有讲到netty是同步非阻塞的，对NIO做封装的，那你能聊聊NIO和其他的IO吗？</p>
+<p> B：（居然还不提示我，不就是还有BIO,AIO吗），除了NIO外，还有BIO，AIO。最早的是BIO,也叫Blocking IO,同步阻塞的，是最原始的io实现，采用流的形式。之后出现了NIO，Non-Blocking IO，核心组件是selector,channel，byteBuffer。采用的是管道的形式实现，selector实现多路复用。AIO，叫做ascy-Io，异步非阻塞io，这个没用过，不是很了解。</p>
+<p> A：好的，你说Nio是同步非阻塞的，那它是怎么做到同步非阻塞的呢？你能从api层面和我讲一下吗？</p>
+<p> B：（人都傻了）这个不是很清楚，我写过Nio的通信demo，在读写切换的时候需要调用一个flip方法，它不能边读边写，必须要一个切换的过程，我感觉这应该算同步的一个原因吧。（可以自己了解下，这个我真的不知道）</p>
+<p> A：那如果线上机器负载过高，你是如何排查的呢？</p>
+<p> B：机器负载过高的话，我会首先用top指令看下是那个进程导致的，假如出现某个进程cpu过高或者内存过高的原因的话，通常是因为java进程。会去查看jvm日志，还有使用jvm相关指令从项目层面是排查。当然，如果单纯从服务器层面的话，除了用top指令查看，进一步会用pstat，iostat命令去查看io和cpu的变化情况，这些指令可以实时打印服务器的变化情况。</p>
+<p> A: 那假如说是因为jvm的原因，你怎么看jvm日志？</p>
+<p> B：（怎么看？？睁眼看啊？？）额？我们一般会去查看jvm日志里的full gc情况，耗时，回收率等等，之前就处理过一次OOM,在gc中里看到了CMS的回收过程。然后修改了机器配置和一些参数才解决了。</p>
+<p>A：那你和我讲讲CMS收集器吧？</p>
+<p>B：（貌似又给自己挖坑了）就讲了CMS的开始标记，并发标记，重新标记，并发清理过程，还描述了concurrent mode failure 过程，因为项目里真的遇到了（具体就不敲了，感兴趣自己了解）</p>
+<p>A：你说你们项目遇到过那个OOM，处理的方案是增加机器配置和修改jvm参数，你们考虑过用G1收集器吗？我觉得你们那场景挺适合用G1收集器的。</p>
+<p>B:我了解过G1收集器，而且也建议过G1收集器，但是讨论了一下还是采用CMS,因为G1是1.7引进的，但是1.9才设置成默认收集器，但是我们的jdk版本是1.8，比较稳定，而且CMS收集器更早出现，更稳定。</p>
+<p>A：那虽然你们没用G1收集器，但是你还是比较了解G1的是吗？能和我讲讲吗？</p>
+<p>B:G1收集器的核心是region，一个核心理念是回收价值，它最大优势是可以吧把每次执行回收的时间控制在我们设置的预期停顿时间范围内。（详细过程我答了，比较复杂，想了解的自己去查资料）。</p>
+<p>A：好的，那jvm是如何判定对象可以被回收的呢？假如有a对象引用b对象，b引用c,c引用a,那这三个对象会不会回收？</p>
+<p>B：回收对象的判定一般有两种方式，引用计数法和Gc roots 根引用法，你刚说的循环引用如果他们没有引用到根的话，在jvm中会被回收，jvm采用的是gc roots方式判断对象时都回收。</p>
+<p>A:那你讲讲Gc roots 有 哪些？</p>
+<p>B: 静态变量，静态常量，局部方法中的变量，本地方法中的变量</p>
+<p>A：好的，那你有了解过CAS吗？</p>
+<p>B：有了解过，compare and swap ,更新前先比较，在juc包中很多类都是通过cas实现的，比如原子类atomicXX,</p>
+<p>A：拿原子类来说，你看过源码吗？怎么通过Cas实现的呢？</p>
+<p>B:原子类底层都调用了unsafe类，unsafe类封装了getandincrement等方法，里面的方法有实现cas。</p>
+<p>A：那unsafe又是如何实现cas的呢？</p>
+<p>B：unsafe里面的方法大多是native方法，调用了底层的c代码实现。c实现细节我不是很清楚。</p>
+<p>A：好的，你说你也深入学习过redis，那set一个字符串，之后又set了一个更长的字符串，你知道这个string在redis中是如何实现扩容的吗？</p>
+<p>B:(嗯？？还有这事？) 额？？这个貌似真没有了解过，redis是用c写的，用allocte开辟内存，如果增加字符串长度的话，动态开辟内存应该就行吧，还有扩容机制吗？我不是很清楚。</p>
+<p>A:好的，时间也差不多了，就聊这些吧，你把那个算法题写一下，40分钟，到时间会自动提交。先这么说，拜拜。</p>
+<p>B: 好的，拜拜。</p>
+<h3 id="三、算法题"><a href="#三、算法题" class="headerlink" title="三、算法题"></a>三、算法题</h3><p>问题：多线程打印1-100，线程1打印123，线程2打印456，线程3答应789，以此类推 不能出现乱序</p>
+<p>以下是提交后自己在idea里实现出来的（测评时我也写了实现，但结果应该错了，没写好）：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.locks.Condition;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.locks.Lock;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.locks.ReentrantLock;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> xu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2020-04-24 23:25</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LockNumberPrint</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">static</span> Condition A = lock.newCondition();</span><br><span class="line">    <span class="keyword">static</span> Condition B = lock.newCondition();</span><br><span class="line">    <span class="keyword">static</span> Condition C = lock.newCondition();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">int</span> state = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadA</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                lock.lock();</span><br><span class="line">                <span class="keyword">while</span> (count &lt;=  <span class="number">100</span>) &#123;</span><br><span class="line">                    <span class="keyword">while</span> (state % <span class="number">3</span> != <span class="number">0</span>) &#123;</span><br><span class="line">                        A.await();</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++) &#123;</span><br><span class="line">                        count++;</span><br><span class="line">                        System.out.println(<span class="string">"A "</span> + count);</span><br><span class="line">                        <span class="keyword">if</span>(count == <span class="number">100</span>) <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    state++;</span><br><span class="line">                    B.signal();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                lock.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadB</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                lock.lock();</span><br><span class="line">                <span class="keyword">while</span> (count &lt; <span class="number">93</span>) &#123;</span><br><span class="line">                    <span class="keyword">while</span> (state % <span class="number">3</span> != <span class="number">1</span>) &#123;</span><br><span class="line">                        B.await();</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++) &#123;</span><br><span class="line">                        count++;</span><br><span class="line">                        System.out.println(<span class="string">"B "</span> + count);</span><br><span class="line">                    &#125;</span><br><span class="line">                    state++;</span><br><span class="line">                    C.signal();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                lock.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadC</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                lock.lock();</span><br><span class="line">                <span class="keyword">while</span> (count &lt; <span class="number">93</span>) &#123;</span><br><span class="line">                    <span class="keyword">while</span> (state % <span class="number">3</span> != <span class="number">2</span>) &#123;</span><br><span class="line">                        C.await();</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++) &#123;</span><br><span class="line">                        count++;</span><br><span class="line">                        System.out.println(<span class="string">"C "</span> + count);</span><br><span class="line">                    &#125;</span><br><span class="line">                    state++;</span><br><span class="line">                    A.signal();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                lock.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> ThreadA()).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> ThreadB()).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> ThreadC()).start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h3><p>  第一次认真的面试阿里系，以上的答案均为我当时面试的口述结果，写面经时没有去找答案，记录的是本人一个真实的面试过程，可能很多问题有答的不对或者不准确的地方。想求正确答案的可以自己去查相关资料。怎么说呢，感受就是阿里面试真的会尽量按照你的项目来问，然后根据你的回答逐步深入，当问到一个点你答不上来的时候就会换一个方向。挺能考验面试者水平的，也算是一次经历吧，除去那个笔试题感觉答的不是很好的话，面试过程有沟通过面试官，应该没问题。不管结果如何，希望可以通过，还需要努力啊，小伙子！</p>
+]]></content>
+      <categories>
+        <category>面试</category>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>面经</tag>
+        <tag>阿里</tag>
+      </tags>
+  </entry>
+</search>

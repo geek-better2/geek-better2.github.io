@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一、背景介绍 工作项目主要是iot型项目，组内技术有用到netty，flink, kafka, redis,mysql,spark。后台技术有Spring boot,dubbo,Es等等web技术，但组内业务非后台，所以面试时介绍了情况，面试官也没有问后台框架相关知识。 二、面试过程（以下以A表示面试官，B表示我本人）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="菜鸟网络一面面经">
+<meta property="og:url" content="http://yoursite.com/2020/07/04/%E8%8F%9C%E9%B8%9F%E7%BD%91%E7%BB%9C%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/index.html">
+<meta property="og:site_name" content="geek海的博客">
+<meta property="og:description" content="一、背景介绍 工作项目主要是iot型项目，组内技术有用到netty，flink, kafka, redis,mysql,spark。后台技术有Spring boot,dubbo,Es等等web技术，但组内业务非后台，所以面试时介绍了情况，面试官也没有问后台框架相关知识。 二、面试过程（以下以A表示面试官，B表示我本人）">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-04T13:56:12.000Z">
+<meta property="article:modified_time" content="2020-07-04T14:31:16.912Z">
+<meta property="article:author" content="geek-better2">
+<meta property="article:tag" content="面经">
+<meta property="article:tag" content="阿里">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/07/04/%E8%8F%9C%E9%B8%9F%E7%BD%91%E7%BB%9C%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>菜鸟网络一面面经 | geek海的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">geek海的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+  <a href="https://github.com/geek-better2" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/04/%E8%8F%9C%E9%B8%9F%E7%BD%91%E7%BB%9C%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/title.jpg">
+      <meta itemprop="name" content="geek-better2">
+      <meta itemprop="description" content="万物之中,希望至美">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="geek海的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          菜鸟网络一面面经
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-07-04 21:56:12 / 修改时间：22:31:16" itemprop="dateCreated datePublished" datetime="2020-07-04T21:56:12+08:00">2020-07-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="一、背景介绍"><a href="#一、背景介绍" class="headerlink" title="一、背景介绍"></a>一、背景介绍</h3><p> 工作项目主要是iot型项目，组内技术有用到netty，flink, kafka, redis,mysql,spark。后台技术有Spring boot,dubbo,Es等等web技术，但组内业务非后台，所以面试时介绍了情况，面试官也没有问后台框架相关知识。</p>
+<h3 id="二、面试过程（以下以A表示面试官，B表示我本人）"><a href="#二、面试过程（以下以A表示面试官，B表示我本人）" class="headerlink" title="二、面试过程（以下以A表示面试官，B表示我本人）"></a>二、面试过程（以下以A表示面试官，B表示我本人）</h3><a id="more"></a>
+
+<p> 注：自我介绍过程省略</p>
+<p> A：先简单介绍一下你的项目架构吧</p>
+<p> B: XXXX(描述了下项目业务流程，讲有用到netty,kafka，flink，redis,mysql)</p>
+<p> A：你们项目用到的框架挺多的，能将一下使用这些框架时是如何取舍的吗？为什么用这个框架呢？</p>
+<p> B: 首先netty是因为业内公认的优秀通讯框架是netty，所以选netty是无可厚非的。在消息队列的选型上，有考虑过rocketMq和kafka对比，从官网来说，两个框架都支持高吞吐，高可用。但是我们经过压测发现用rocketMq时会导致netty的长连接数上不去，只能保持2万5左右，而用kafka的话可以保持4万左右的长连接，另外，在阿里云上对于我们的业务需要rocketMq的铂金版，比较昂贵。实时计算方面，选择了flink，而没有使用spark Streaming，是因为spark Streaming是用微批处理来表示实时处理。而flink是基于状态的实时无界/有界处理框架，而且flink最近几年社区很火，另外我们组内有一个技术人员是从数据中心转过来的，对flink更加熟悉，所以架构选型上选择了flink。</p>
+<p> A：你们项目用netty，能够保持几万长连接。那你们有在linux层面有做什么处理吗？服务器的连接数是否是可以无限扩展呢？</p>
+<p> B：linux相关的知识不是很熟悉，但是我们当时对netty服务器做了压测，达到1万以上的时候就报错connect reset by peer 错误，后面了解了下是因为linux的句柄（open files）的原因，于是开大了句柄数，连接数在负载均衡的情况下可以达到单机连接数（4核8G）2万5左右。</p>
+<p> A：你说通过开大句柄数可以增加tcp长连接数，那你知道在linux上句柄数和tcp长连接是怎么对应的吗？为什么增大所谓的句柄数，你连接数就可以上来呢？</p>
+<p> B：额，这在linux层面没有去深究，只是大概知道这么个情况，抱歉。</p>
+<p> A：没事，那你们项目有用到kafka，你们是如何保证消息不被重复消费的呢？</p>
+<p> B：kafka里面有分区，多副本机制，每个消息被发送到broker后，leader接收到后，follower会去同步，我们采用的是-1,就是说副本全部同步成功后才会响应成功，这样不会消息丢失，但是在副本同步后leader挂了导致没有ack后，生产者会重复发送，这种相对比较极端的情况，我们在消费者层做了控制，每个消息有时间戳，如果是同一个时间戳的消息，我们消费会验证。</p>
+<p> A: 好的，那不说kafka的消息重复方面，假如是业务调接口时，由于网络超时等原因导致的重复写请求。你们是如何保持这个一致性的呢？</p>
+<p> B:接口幂等方面的话，我了解过一些，应该可以采用乐观锁机制，给每个请求写入的时候加个版本管理。</p>
+<p> A：那假如用乐观锁来保持幂等，这个版本号你觉得是在哪里维护的呢？</p>
+<p> B：（有点小懵，考虑了一下）应该是在我们的接口处自增的，因为从消息里面带过来的话，会增加消息包的大小，而且不容易维护。（这个很大可能答错了，我不大熟）</p>
+<p> A：ok，那假如我有一个服务，它要调用A服务，A有调用B服务，B又调用C服务。这么说吧，淘宝下一个订单，会有订单系统，账单系统，仓储系统的调用。你如何保持他们的一致性的呢？</p>
+<p> B：（分布式事务？？？）噢，你想问的应该是分布式事务吧，这个我有了解过，可以用2PC来实现分布式事务，XXXX(细节就不敲了，感兴趣可以自己去了解下)。</p>
+<p> A：2PC的分布式事务有什么缺点呢，有没有什么更好的方案？</p>
+<p> B: 2PC的话，在第一阶段的本地会写log日志，并且锁定资源，如果此时有一个服务网络延迟比较严重甚至是挂了的情况，会导致这个分布式事务执行失败，并且由于锁定资源会导致服务的吞吐量降低。所以有个3PC的分布式事务方案，就是在锁定资源前增加了一个询问过程（询问过程不锁定资源），如果各个服务都能正常响应，说明应该不会有网络超时问题。这些都是我自己学习的，业务没有实操过，我对web不是很熟悉，对并发，jvm，redis，kafka，mysql等中间件比较熟悉（已经有点懵了，想转移话题）</p>
+<p> A:那你们项目是用netty做长连接服务的，那你能讲下netty的线程模型吗？</p>
+<p> B：netty中有boss线程组，和worker线程组，采用的是reactor模型实现多路复用（有兴趣自己了解下）boss线程监听连接事件，轮训机制，worker线程监听读写事件，然后分配给业务线程去处理。</p>
+<p> A：你刚有讲到netty是同步非阻塞的，对NIO做封装的，那你能聊聊NIO和其他的IO吗？</p>
+<p> B：（居然还不提示我，不就是还有BIO,AIO吗），除了NIO外，还有BIO，AIO。最早的是BIO,也叫Blocking IO,同步阻塞的，是最原始的io实现，采用流的形式。之后出现了NIO，Non-Blocking IO，核心组件是selector,channel，byteBuffer。采用的是管道的形式实现，selector实现多路复用。AIO，叫做ascy-Io，异步非阻塞io，这个没用过，不是很了解。</p>
+<p> A：好的，你说Nio是同步非阻塞的，那它是怎么做到同步非阻塞的呢？你能从api层面和我讲一下吗？</p>
+<p> B：（人都傻了）这个不是很清楚，我写过Nio的通信demo，在读写切换的时候需要调用一个flip方法，它不能边读边写，必须要一个切换的过程，我感觉这应该算同步的一个原因吧。（可以自己了解下，这个我真的不知道）</p>
+<p> A：那如果线上机器负载过高，你是如何排查的呢？</p>
+<p> B：机器负载过高的话，我会首先用top指令看下是那个进程导致的，假如出现某个进程cpu过高或者内存过高的原因的话，通常是因为java进程。会去查看jvm日志，还有使用jvm相关指令从项目层面是排查。当然，如果单纯从服务器层面的话，除了用top指令查看，进一步会用pstat，iostat命令去查看io和cpu的变化情况，这些指令可以实时打印服务器的变化情况。</p>
+<p> A: 那假如说是因为jvm的原因，你怎么看jvm日志？</p>
+<p> B：（怎么看？？睁眼看啊？？）额？我们一般会去查看jvm日志里的full gc情况，耗时，回收率等等，之前就处理过一次OOM,在gc中里看到了CMS的回收过程。然后修改了机器配置和一些参数才解决了。</p>
+<p>A：那你和我讲讲CMS收集器吧？</p>
+<p>B：（貌似又给自己挖坑了）就讲了CMS的开始标记，并发标记，重新标记，并发清理过程，还描述了concurrent mode failure 过程，因为项目里真的遇到了（具体就不敲了，感兴趣自己了解）</p>
+<p>A：你说你们项目遇到过那个OOM，处理的方案是增加机器配置和修改jvm参数，你们考虑过用G1收集器吗？我觉得你们那场景挺适合用G1收集器的。</p>
+<p>B:我了解过G1收集器，而且也建议过G1收集器，但是讨论了一下还是采用CMS,因为G1是1.7引进的，但是1.9才设置成默认收集器，但是我们的jdk版本是1.8，比较稳定，而且CMS收集器更早出现，更稳定。</p>
+<p>A：那虽然你们没用G1收集器，但是你还是比较了解G1的是吗？能和我讲讲吗？</p>
+<p>B:G1收集器的核心是region，一个核心理念是回收价值，它最大优势是可以吧把每次执行回收的时间控制在我们设置的预期停顿时间范围内。（详细过程我答了，比较复杂，想了解的自己去查资料）。</p>
+<p>A：好的，那jvm是如何判定对象可以被回收的呢？假如有a对象引用b对象，b引用c,c引用a,那这三个对象会不会回收？</p>
+<p>B：回收对象的判定一般有两种方式，引用计数法和Gc roots 根引用法，你刚说的循环引用如果他们没有引用到根的话，在jvm中会被回收，jvm采用的是gc roots方式判断对象时都回收。</p>
+<p>A:那你讲讲Gc roots 有 哪些？</p>
+<p>B: 静态变量，静态常量，局部方法中的变量，本地方法中的变量</p>
+<p>A：好的，那你有了解过CAS吗？</p>
+<p>B：有了解过，compare and swap ,更新前先比较，在juc包中很多类都是通过cas实现的，比如原子类atomicXX,</p>
+<p>A：拿原子类来说，你看过源码吗？怎么通过Cas实现的呢？</p>
+<p>B:原子类底层都调用了unsafe类，unsafe类封装了getandincrement等方法，里面的方法有实现cas。</p>
+<p>A：那unsafe又是如何实现cas的呢？</p>
+<p>B：unsafe里面的方法大多是native方法，调用了底层的c代码实现。c实现细节我不是很清楚。</p>
+<p>A：好的，你说你也深入学习过redis，那set一个字符串，之后又set了一个更长的字符串，你知道这个string在redis中是如何实现扩容的吗？</p>
+<p>B:(嗯？？还有这事？) 额？？这个貌似真没有了解过，redis是用c写的，用allocte开辟内存，如果增加字符串长度的话，动态开辟内存应该就行吧，还有扩容机制吗？我不是很清楚。</p>
+<p>A:好的，时间也差不多了，就聊这些吧，你把那个算法题写一下，40分钟，到时间会自动提交。先这么说，拜拜。</p>
+<p>B: 好的，拜拜。</p>
+<h3 id="三、算法题"><a href="#三、算法题" class="headerlink" title="三、算法题"></a>三、算法题</h3><p>问题：多线程打印1-100，线程1打印123，线程2打印456，线程3答应789，以此类推 不能出现乱序</p>
+<p>以下是提交后自己在idea里实现出来的（测评时我也写了实现，但结果应该错了，没写好）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.locks.Condition;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.locks.Lock;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.locks.ReentrantLock;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> xu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2020-04-24 23:25</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LockNumberPrint</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">static</span> Condition A = lock.newCondition();</span><br><span class="line">    <span class="keyword">static</span> Condition B = lock.newCondition();</span><br><span class="line">    <span class="keyword">static</span> Condition C = lock.newCondition();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">int</span> state = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadA</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                lock.lock();</span><br><span class="line">                <span class="keyword">while</span> (count &lt;=  <span class="number">100</span>) &#123;</span><br><span class="line">                    <span class="keyword">while</span> (state % <span class="number">3</span> != <span class="number">0</span>) &#123;</span><br><span class="line">                        A.await();</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++) &#123;</span><br><span class="line">                        count++;</span><br><span class="line">                        System.out.println(<span class="string">"A "</span> + count);</span><br><span class="line">                        <span class="keyword">if</span>(count == <span class="number">100</span>) <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    state++;</span><br><span class="line">                    B.signal();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                lock.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadB</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                lock.lock();</span><br><span class="line">                <span class="keyword">while</span> (count &lt; <span class="number">93</span>) &#123;</span><br><span class="line">                    <span class="keyword">while</span> (state % <span class="number">3</span> != <span class="number">1</span>) &#123;</span><br><span class="line">                        B.await();</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++) &#123;</span><br><span class="line">                        count++;</span><br><span class="line">                        System.out.println(<span class="string">"B "</span> + count);</span><br><span class="line">                    &#125;</span><br><span class="line">                    state++;</span><br><span class="line">                    C.signal();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                lock.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadC</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                lock.lock();</span><br><span class="line">                <span class="keyword">while</span> (count &lt; <span class="number">93</span>) &#123;</span><br><span class="line">                    <span class="keyword">while</span> (state % <span class="number">3</span> != <span class="number">2</span>) &#123;</span><br><span class="line">                        C.await();</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++) &#123;</span><br><span class="line">                        count++;</span><br><span class="line">                        System.out.println(<span class="string">"C "</span> + count);</span><br><span class="line">                    &#125;</span><br><span class="line">                    state++;</span><br><span class="line">                    A.signal();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                lock.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> ThreadA()).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> ThreadB()).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> ThreadC()).start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h3><p>  第一次认真的面试阿里系，以上的答案均为我当时面试的口述结果，写面经时没有去找答案，记录的是本人一个真实的面试过程，可能很多问题有答的不对或者不准确的地方。想求正确答案的可以自己去查相关资料。怎么说呢，感受就是阿里面试真的会尽量按照你的项目来问，然后根据你的回答逐步深入，当问到一个点你答不上来的时候就会换一个方向。挺能考验面试者水平的，也算是一次经历吧，除去那个笔试题感觉答的不是很好的话，面试过程有沟通过面试官，应该没问题。不管结果如何，希望可以通过，还需要努力啊，小伙子！</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>Thank you for your accept. mua！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="geek-better2 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="geek-better2 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%A2%E7%BB%8F/" rel="tag"># 面经</a>
+              <a href="/tags/%E9%98%BF%E9%87%8C/" rel="tag"># 阿里</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/03/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、背景介绍"><span class="nav-number">1.</span> <span class="nav-text">一、背景介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、面试过程（以下以A表示面试官，B表示我本人）"><span class="nav-number">2.</span> <span class="nav-text">二、面试过程（以下以A表示面试官，B表示我本人）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、算法题"><span class="nav-number">3.</span> <span class="nav-text">三、算法题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、总结"><span class="nav-number">4.</span> <span class="nav-text">四、总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="geek-better2"
+      src="/images/title.jpg">
+  <p class="site-author-name" itemprop="name">geek-better2</p>
+  <div class="site-description" itemprop="description">万物之中,希望至美</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/geek-better2" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;geek-better2" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/niklaus-40-12" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;niklaus-40-12" rel="noopener" target="_blank"><i class="fab fa-zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Klaus</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">NaNm</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">NaN:aN</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
